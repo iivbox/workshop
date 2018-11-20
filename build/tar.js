@@ -3,11 +3,12 @@ const fs = require('fs');
 const path = require('path');
 const dirPath = require('./dirPath.js');
 const utils = require('./utils');
+const tar = require('tar');
 // 打包区块到相应的目录
 
 const blockFiles = fs.readdirSync(dirPath.blockInputPath);
 // 清空输出目录
-shell.exec(`rm -rf ${dirPath.blockOutPath}/*`);
+shell.rm('-rf', `${dirPath.blockOutPath}/*`);
 
 blockFiles.forEach(function (item, index) {
   let outPath = path.resolve(dirPath.blockOutPath, `${item}.tar`);
@@ -18,7 +19,7 @@ blockFiles.forEach(function (item, index) {
 // 打包模板到相应的目录
 const tplFiles = fs.readdirSync(dirPath.tplInputPath);
 // 清空输出目录
-shell.exec(`rm -rf ${dirPath.tplOutPath}/*`);
+shell.rm('-rf', `${dirPath.tplOutPath}/*`);
 
 tplFiles.forEach(function (item, index) {
   let outPath = path.resolve(dirPath.tplOutPath, `${item}.tar`);
@@ -27,7 +28,7 @@ tplFiles.forEach(function (item, index) {
   // 打包前删除node_modules文件夹
   fs.exists(nodeModulePath, exists => {
     if (exists) {
-      shell.exec(`rm -rf ${nodeModulePath}`);
+      shell.rm('rf',  `${nodeModulePath}`);
     }
   })
   
